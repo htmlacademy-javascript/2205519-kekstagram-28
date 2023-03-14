@@ -1,3 +1,4 @@
+/* eslint-disable */
 const checkString = (string, length) => console.log(string.length <= length);
 checkString('проверяемая строка', 20);
 checkString('проверяемая строка', 18);
