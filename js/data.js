@@ -1,11 +1,11 @@
 import {SIMILAR_PUBLICATIONS_COUNT, SIMILAR_COMMENTS_COUNT, DESCRIPTIONS, COMMENT_MESSAGES, COMMENT_NAMES} from './const.js';
-import {getRandomPositiveInteger, createUniquePositiveRandomNumber, getRandomArrayElement} from './util.js';
+import {getRandomPositiveInteger, createUniquePositiveRandomNumber, getRandomArrayElement, createIdGenerator} from './util.js';
 
-const generatePhotoId = createUniquePositiveRandomNumber(1, 25);
+const generatePhotoId = createIdGenerator();
 const generatePhotoUrl = createUniquePositiveRandomNumber(1, 25);
 const generateLikesCount = createUniquePositiveRandomNumber(15, 200);
-const generateCommentsId = createUniquePositiveRandomNumber(1, 6);
-const generateCommentsAvatar = createUniquePositiveRandomNumber(1, 6);
+const generateCommentsId = createIdGenerator();
+const generateCommentsAvatar = createIdGenerator();
 
 
 const createComment = () => ({

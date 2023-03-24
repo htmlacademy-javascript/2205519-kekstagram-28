@@ -1,4 +1,4 @@
-import {createManyPublications} from './data.js';
+// import {createManyPublications} from './data.js';
 import {renderThumbnails} from './thumbnails.js';
 
 
