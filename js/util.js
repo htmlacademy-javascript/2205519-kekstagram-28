@@ -32,4 +32,8 @@ export function createIdGenerator () {
   };
 }
 
+export function isEscapeKey (evt) {
+  return evt.key === 'Escape';
+}
+
 export const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];

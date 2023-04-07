@@ -1,9 +1,4 @@
-// import {createManyPublications} from './data.js';
-import {renderThumbnails} from './thumbnails.js';
+import {createManyPublications} from './data.js';
+import {renderPictureModal} from './picture-modal.js';
 
-
-console.log( // eslint-disable-line
-  // createManyPublications()
-);
-
-renderThumbnails();
+renderPictureModal(createManyPublications());
