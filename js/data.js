@@ -5,12 +5,11 @@ const generatePhotoId = createIdGenerator();
 const generatePhotoUrl = createIdGenerator(1, 25);
 const generateLikesCount = createIdGenerator(15, 200);
 const generateCommentsId = createIdGenerator();
-const generateCommentsAvatar = createIdGenerator();
 
 
 const createComment = () => ({
   id: generateCommentsId(),
-  avatar: `img/avatar-${generateCommentsAvatar()}.svg`,
+  avatar: `img/avatar-${getRandomPositiveInteger(1 ,6)}.svg`,
   message: COMMENT_MESSAGES[getRandomPositiveInteger(0, COMMENT_MESSAGES.length - 1)],
   name: COMMENT_NAMES[getRandomPositiveInteger(0, COMMENT_NAMES.length - 1)],
 });
