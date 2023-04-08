@@ -1,7 +1,7 @@
 export const SIMILAR_PUBLICATIONS_COUNT = 25;
 export const SIMILAR_COMMENTS_COUNT = 5;
 
-export const DESCRIPTIONS = [
+export const COMMENT_DESCRIPTIONS = [
   'Посмотрите где я сегодня побывал!',
   'Мой кот',
   'Красивый закат',
@@ -23,5 +23,8 @@ export const COMMENT_NAMES = [
   'Женя',
   'Алена',
 ];
+
+// Количество комментариев в big-picture
+export const COMMENTS_COUNT = 5;
 
 
