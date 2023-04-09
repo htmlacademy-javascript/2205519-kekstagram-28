@@ -3,7 +3,6 @@ import {getRandomPositiveInteger, getRandomArrayElement, createIdGenerator} from
 
 const generatePhotoId = createIdGenerator();
 const generatePhotoUrl = createIdGenerator(1, 25);
-const generateLikesCount = createIdGenerator(15, 200);
 const generateCommentsId = createIdGenerator();
 
 
@@ -21,7 +20,7 @@ const createPublication = () => ({
   id: generatePhotoId(),
   url: `photos/${generatePhotoUrl()}.jpg`,
   description: getRandomArrayElement(COMMENT_DESCRIPTIONS),
-  likes: generateLikesCount(),
+  likes: getRandomPositiveInteger(15, 200),
   comments: createManyComments(),
 });
 
