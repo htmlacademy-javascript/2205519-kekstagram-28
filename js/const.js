@@ -31,3 +31,63 @@ export const COMMENTS_COUNT = 5;
 export const HASHTAG_MAX_COUNT = 5;
 export const HASHTAG_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
 export const HASHTAG_ERROR_TEXT = 'Ошибка в указании хештега';
+
+// Настройки масштабирования изображения в image-scaling.js
+export const DEFAULT_SCALE = 100;
+export const MIN_SCALE = 25;
+export const MAX_SCALE = 100;
+export const SCALE_STEP = 25;
+
+// Параметры эффектов для редактирования изображений
+export const EFFECTS = [
+  {
+    name: 'none',
+    style: 'none',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '',
+  },
+  {
+    name: 'chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  {
+    name: 'sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  {
+    name: 'marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%',
+  },
+  {
+    name: 'phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px',
+  },
+  {
+    name: 'heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: '',
+  }
+];
+
+export const DEFAULT_EFFECT = EFFECTS[0];

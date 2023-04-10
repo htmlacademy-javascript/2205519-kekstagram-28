@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {HASHTAG_MAX_COUNT, HASHTAG_VALIDATION, HASHTAG_ERROR_TEXT} from './const.js';
+import {resetScale} from './image-scaling.js';
+import {resetEffects} from './image-effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
@@ -29,6 +31,8 @@ const closeModal = () => {
 
   form.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 const ifTextFieldFocused = () =>
