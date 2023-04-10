@@ -9,7 +9,7 @@ const body = document.querySelector('body');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const allComments = [];
+let allComments;
 let commentsShow = 0;
 
 
@@ -19,13 +19,7 @@ const onEscapeButton = (evt) => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     commentsShow = 0;
-    allComments.length = 0;
-  }
-};
-
-const renderAllComments = (arrayComments) => {
-  for (let i = 0; i < arrayComments.length;i++) {
-    allComments.push(arrayComments[i]);
+    allComments = [];
   }
 };
 
@@ -65,13 +59,14 @@ const renderBigPicture = ({url, likes, comments, description}) => {
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
   listComments.innerHTML = '';
-  renderAllComments(comments);
+  allComments = comments;
   loadComments();
 };
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
+  allComments = [];
 };
 
 document.removeEventListener('keydown', (evt) => {

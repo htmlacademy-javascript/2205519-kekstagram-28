@@ -27,4 +27,7 @@ export const COMMENT_NAMES = [
 // Количество комментариев в big-picture
 export const COMMENTS_COUNT = 5;
 
-
+// Хештег правила для form-edit.js
+export const HASHTAG_MAX_COUNT = 5;
+export const HASHTAG_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
+export const HASHTAG_ERROR_TEXT = 'Ошибка в указании хештега';
