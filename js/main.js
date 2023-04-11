@@ -1,6 +1,21 @@
-import {createManyPublications} from './data.js';
 import {renderPictureModal} from './picture-modal.js';
+import {getData, sendData} from './api.js';
+import {showAlert} from './util.js';
+import {onFormSubmit, closeModal, showFullSuccessMessage, showFullErrorMessage} from './form-edit.js';
 
-import './form-edit.js';
+onFormSubmit(async (data) => {
+  try {
+    await sendData(data);
+    closeModal();
+    showFullSuccessMessage();
+  } catch {
+    showFullErrorMessage();
+  }
+});
 
-renderPictureModal(createManyPublications());
+try {
+  const data = await getData();
+  renderPictureModal(data);
+} catch (err) {
+  showAlert(err.message);
+}

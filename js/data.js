@@ -27,4 +27,4 @@ const createPublication = () => ({
 const createManyPublications = () => Array.from({length: SIMILAR_PUBLICATIONS_COUNT}, createPublication);
 
 
-export {createManyPublications};
+createManyPublications();

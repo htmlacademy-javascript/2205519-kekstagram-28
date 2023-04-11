@@ -91,3 +91,20 @@ export const EFFECTS = [
 ];
 
 export const DEFAULT_EFFECT = EFFECTS[0];
+
+
+// Отправление и получение данных с сервера
+export const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+
+export const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+export const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+export const ErrorText = {
+  GET_DATA: 'Ошибка загрузки данных. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму.',
+};
