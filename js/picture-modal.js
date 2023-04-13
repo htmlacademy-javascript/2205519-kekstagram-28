@@ -1,7 +1,7 @@
 import {openBigPicture} from './big-picture.js';
 import {renderThumbnailPictures, picturesContainer} from './thumbnails.js';
 
-export const renderPictureModal = (pictures) => {
+export const renderPictures = (pictures) => {
   picturesContainer.addEventListener('click', (evt) => {
     const thumbnailPicture = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnailPicture) {

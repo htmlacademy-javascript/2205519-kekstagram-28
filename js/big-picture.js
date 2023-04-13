@@ -6,7 +6,7 @@ const bigPicture = document.querySelector('.big-picture');
 const listComments = bigPicture.querySelector('.social__comments');
 const elementListCopy = listComments.querySelector('li').cloneNode(true);
 const body = document.querySelector('body');
-const commentCount = document.querySelector('.social__comment-count');
+const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 let allComments;
@@ -49,6 +49,8 @@ const loadComments = () => {
   } else {
     commentsLoader.classList.remove('hidden');
   }
+  commentsCount.textContent = '';
+  commentsCount.textContent = `${commentsShow} из ${allComments.length} комментариев`;
 };
 
 const renderBigPicture = ({url, likes, comments, description}) => {
@@ -83,4 +85,3 @@ export const openBigPicture = (picture) => {
 
   renderBigPicture(picture);
 };
-
