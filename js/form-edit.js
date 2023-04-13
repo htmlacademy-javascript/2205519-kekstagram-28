@@ -4,12 +4,18 @@ import {resetScale} from './image-scaling.js';
 import {resetEffects} from './image-effects.js';
 
 const body = document.querySelector('body');
-const form = document.querySelector('#upload-select-image');
+const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector ('.img-upload__overlay');
 const commentField = form.querySelector ('.text__description');
 const hashtagsField = form.querySelector ('.text__hashtags');
-const cancelButton = form.querySelector ('#upload-cancel');
-const fileField = form.querySelector ('#upload-file');
+const submitButton = form.querySelector('.img-upload__submit');
+const cancelButton = form.querySelector ('.img-upload__cancel');
+const fileField = form.querySelector ('.img-upload__input');
+
+const successCase = document.querySelector('#success').content.querySelector('.success');
+const successButton = document.querySelector('#success').content.querySelector('.success__button');
+const errorCase = document.querySelector('#error').content.querySelector('.error');
+const errorButton = document.querySelector('#error').content.querySelector('.error__button');
 
 
 const pristine = new Pristine(form, {
@@ -41,7 +47,10 @@ const ifTextFieldFocused = () =>
 function onDocumentEscape(evt) {
   if (isEscapeKey(evt) && !ifTextFieldFocused()) {
     evt.preventDefault();
-    closeModal();
+    const hasHiddenPopup = document.querySelector('.error');
+    if (!hasHiddenPopup) {
+      closeModal();
+    }
   }
 }
 
@@ -76,11 +85,92 @@ const onCancelButtonClick = () => {
   closeModal();
 };
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+// Разблокировка кнопки формы после получения ответа от сервера
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
 };
+
+// Блокировка кнопки формы на время ожидания ответа сервера
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикация...';
+};
+
+// Показ сообщения об успешной отправке
+const showSuccessMessage = () => {
+  let flag = false;
+  return () => {
+    if (!flag) {
+      flag = true;
+      document.body.append(successCase);
+    } else {
+      const successCaseClone = document.querySelector('.success');
+      successCaseClone.classList.remove('hidden');
+    }
+  };
+};
+const showFullSuccessMessage = showSuccessMessage();
+
+const showErrorMessage = () => {
+  let flag = false;
+  return () => {
+    if (!flag) {
+      flag = true;
+      document.body.append(errorCase);
+    } else {
+      const errorCaseClone = document.querySelector('.error');
+      errorCaseClone.classList.remove('hidden');
+    }
+  };
+};
+const showFullErrorMessage = showErrorMessage();
+
+// Скрыть показ успешной/ошибочной отправки
+const hideModalMessage = () => {
+  successCase.classList.add('hidden');
+  errorCase.classList.add('hidden');
+};
+
+// Закрытие сообщения об успешной/ошибочной отправке при клике на body
+const closeModalMessageWithClickOnBody = (evt) => {
+  evt.stopPropagation();
+  if (evt.target.matches('.success') || evt.target.matches('.error')) {
+    hideModalMessage();
+  }
+};
+
+// Закрытие сообщения об успешной/ошибочной отправке при клике кнопку
+const closeModalMessageWithClickOnButton = () => {
+  hideModalMessage();
+};
+
+// Закрытие сообщения об успешной/ошибочной отправке при нажатии Esc
+const closeModalMessageWithPressEsc = (evt) => {
+  if (isEscapeKey(evt)) {
+    hideModalMessage();
+  }
+};
+
+// Отправка формы
+const onFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      successButton.addEventListener('click', closeModalMessageWithClickOnButton);
+      errorButton.addEventListener('click', closeModalMessageWithClickOnButton);
+      document.addEventListener('keydown', closeModalMessageWithPressEsc);
+      document.addEventListener('click', closeModalMessageWithClickOnBody);
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
+};
+
 
 fileField.addEventListener('change', onFileUploadChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-fileField.addEventListener ('change', onFormSubmit);
+
+export {onFormSubmit, closeModal, showFullSuccessMessage, showFullErrorMessage};

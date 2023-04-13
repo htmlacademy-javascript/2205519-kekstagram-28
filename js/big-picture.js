@@ -49,8 +49,6 @@ const loadComments = () => {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-
-  commentCount.innerHTML = `${commentsShow} из <span class="comments-count"> ${allComments.length}</span> комментариев`;
 };
 
 const renderBigPicture = ({url, likes, comments, description}) => {
