@@ -108,3 +108,9 @@ export const ErrorText = {
   GET_DATA: 'Ошибка загрузки данных. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму.',
 };
+
+// Количество фото в filter.js
+export const NUMBER_OF_PHOTOS = 10;
+
+// Задержка сообщения об ошибке в util.js
+export const ERROR_MESSAGE_DELAY = 5000;

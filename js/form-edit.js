@@ -8,7 +8,7 @@ const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector ('.img-upload__overlay');
 const commentField = form.querySelector ('.text__description');
 const hashtagsField = form.querySelector ('.text__hashtags');
-const submitButton = form.querySelector('.img-upload__submit');
+const uploadButton = form.querySelector('.img-upload__submit');
 const cancelButton = form.querySelector ('.img-upload__cancel');
 const fileField = form.querySelector ('.img-upload__input');
 
@@ -16,7 +16,6 @@ const successCase = document.querySelector('#success').content.querySelector('.s
 const successButton = document.querySelector('#success').content.querySelector('.success__button');
 const errorCase = document.querySelector('#error').content.querySelector('.error');
 const errorButton = document.querySelector('#error').content.querySelector('.error__button');
-
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -86,15 +85,15 @@ const onCancelButtonClick = () => {
 };
 
 // Разблокировка кнопки формы после получения ответа от сервера
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+const unblockUploadButton = () => {
+  uploadButton.disabled = false;
+  uploadButton.textContent = 'Опубликовать';
 };
 
 // Блокировка кнопки формы на время ожидания ответа сервера
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикация...';
+const blockUploadButton = () => {
+  uploadButton.disabled = true;
+  uploadButton.textContent = 'Публикация...';
 };
 
 // Показ сообщения об успешной отправке
@@ -133,22 +132,24 @@ const hideModalMessage = () => {
 };
 
 // Закрытие сообщения об успешной/ошибочной отправке при клике на body
-const closeModalMessageWithClickOnBody = (evt) => {
+const onBodyClick = (evt) => {
   evt.stopPropagation();
   if (evt.target.matches('.success') || evt.target.matches('.error')) {
     hideModalMessage();
+    document.removeEventListener('click', onBodyClick);
   }
 };
 
 // Закрытие сообщения об успешной/ошибочной отправке при клике кнопку
-const closeModalMessageWithClickOnButton = () => {
+const onCloseButtonClick = () => {
   hideModalMessage();
 };
 
 // Закрытие сообщения об успешной/ошибочной отправке при нажатии Esc
-const closeModalMessageWithPressEsc = (evt) => {
+const onEscPress = (evt) => {
   if (isEscapeKey(evt)) {
     hideModalMessage();
+    document.removeEventListener('keydown', onEscPress);
   }
 };
 
@@ -158,13 +159,13 @@ const onFormSubmit = (cb) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
-      successButton.addEventListener('click', closeModalMessageWithClickOnButton);
-      errorButton.addEventListener('click', closeModalMessageWithClickOnButton);
-      document.addEventListener('keydown', closeModalMessageWithPressEsc);
-      document.addEventListener('click', closeModalMessageWithClickOnBody);
+      blockUploadButton();
+      successButton.addEventListener('click', onCloseButtonClick);
+      errorButton.addEventListener('click', onCloseButtonClick);
+      document.addEventListener('keydown', onEscPress);
+      document.addEventListener('click', onBodyClick);
       await cb(new FormData(form));
-      unblockSubmitButton();
+      unblockUploadButton();
     }
   });
 };

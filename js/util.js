@@ -1,3 +1,5 @@
+import {ERROR_MESSAGE_DELAY} from './const.js';
+
 export function getRandomPositiveInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -53,5 +55,13 @@ export const showAlert = (message) => {
 
   setTimeout(() => {
     alert.remove();
-  }, 5000);
+  }, ERROR_MESSAGE_DELAY);
+};
+
+export const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
 };
