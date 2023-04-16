@@ -3,45 +3,45 @@ import {HASHTAG_MAX_COUNT, HASHTAG_VALIDATION, HASHTAG_ERROR_TEXT} from './const
 import {resetScale} from './image-scaling.js';
 import {resetEffects} from './image-effects.js';
 
-const body = document.querySelector('body');
-const form = document.querySelector('.img-upload__form');
-const overlay = form.querySelector ('.img-upload__overlay');
-const commentField = form.querySelector ('.text__description');
-const hashtagsField = form.querySelector ('.text__hashtags');
-const uploadButton = form.querySelector('.img-upload__submit');
-const cancelButton = form.querySelector ('.img-upload__cancel');
-const fileField = form.querySelector ('.img-upload__input');
+const bodyElement = document.querySelector('body');
+const formElement = document.querySelector('.img-upload__form');
+const overlayElement = formElement.querySelector ('.img-upload__overlay');
+const commentFieldElement = formElement.querySelector ('.text__description');
+const hashtagsFieldElement = formElement.querySelector ('.text__hashtags');
+const uploadButtonElement = formElement.querySelector('.img-upload__submit');
+const cancelButtonElement = formElement.querySelector ('.img-upload__cancel');
+const uploadInputElement = formElement.querySelector ('.img-upload__input');
 
-const successCase = document.querySelector('#success').content.querySelector('.success');
-const successButton = document.querySelector('#success').content.querySelector('.success__button');
-const errorCase = document.querySelector('#error').content.querySelector('.error');
-const errorButton = document.querySelector('#error').content.querySelector('.error__button');
+const successCaseElement = document.querySelector('#success').content.querySelector('.success');
+const successButtonElement = document.querySelector('#success').content.querySelector('.success__button');
+const errorCaseElement = document.querySelector('#error').content.querySelector('.error');
+const errorButtonElement = document.querySelector('#error').content.querySelector('.error__button');
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error',
 });
 
 const openModal = () => {
-  overlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+  overlayElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscape);
 };
 
 const closeModal = () => {
-  overlay.classList.add('hidden');
-  body.classList.remove('modal-open');
+  overlayElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscape);
 
-  form.reset();
+  formElement.reset();
   pristine.reset();
   resetScale();
   resetEffects();
 };
 
 const ifTextFieldFocused = () =>
-  document.activeElement === hashtagsField || document.activeElement === commentField;
+  document.activeElement === hashtagsFieldElement || document.activeElement === commentFieldElement;
 
 function onDocumentEscape(evt) {
   if (isEscapeKey(evt) && !ifTextFieldFocused()) {
@@ -53,11 +53,11 @@ function onDocumentEscape(evt) {
   }
 }
 
-const validHashtag = (tag) => HASHTAG_VALIDATION.test(tag);
+const isValidHashtag = (tag) => HASHTAG_VALIDATION.test(tag);
 
-const validHashtagCount = (tags) => tags.length <= HASHTAG_MAX_COUNT;
+const validateHashtagCount = (tags) => tags.length <= HASHTAG_MAX_COUNT;
 
-const uniqueHashtag = (tags) => {
+const isUniqueHashtag = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
@@ -67,11 +67,11 @@ const validateTags = (value) => {
     .trim()
     .split(' ')
     .filter((tag) => tag.trim().length);
-  return validHashtagCount(tags) && uniqueHashtag(tags) && tags.every(validHashtag);
+  return validateHashtagCount(tags) && isUniqueHashtag(tags) && tags.every(isValidHashtag);
 };
 
 pristine.addValidator(
-  hashtagsField,
+  hashtagsFieldElement,
   validateTags,
   HASHTAG_ERROR_TEXT,
 );
@@ -86,14 +86,14 @@ const onCancelButtonClick = () => {
 
 // Разблокировка кнопки формы после получения ответа от сервера
 const unblockUploadButton = () => {
-  uploadButton.disabled = false;
-  uploadButton.textContent = 'Опубликовать';
+  uploadButtonElement.disabled = false;
+  uploadButtonElement.textContent = 'Опубликовать';
 };
 
 // Блокировка кнопки формы на время ожидания ответа сервера
 const blockUploadButton = () => {
-  uploadButton.disabled = true;
-  uploadButton.textContent = 'Публикация...';
+  uploadButtonElement.disabled = true;
+  uploadButtonElement.textContent = 'Публикация...';
 };
 
 // Показ сообщения об успешной отправке
@@ -102,7 +102,7 @@ const showSuccessMessage = () => {
   return () => {
     if (!flag) {
       flag = true;
-      document.body.append(successCase);
+      document.body.append(successCaseElement);
     } else {
       const successCaseClone = document.querySelector('.success');
       successCaseClone.classList.remove('hidden');
@@ -116,7 +116,8 @@ const showErrorMessage = () => {
   return () => {
     if (!flag) {
       flag = true;
-      document.body.append(errorCase);
+      document.body.append(errorCaseElement);
+      successCaseElement.classList.remove('hidden');
     } else {
       const errorCaseClone = document.querySelector('.error');
       errorCaseClone.classList.remove('hidden');
@@ -127,8 +128,8 @@ const showFullErrorMessage = showErrorMessage();
 
 // Скрыть показ успешной/ошибочной отправки
 const hideModalMessage = () => {
-  successCase.classList.add('hidden');
-  errorCase.classList.add('hidden');
+  successCaseElement.classList.add('hidden');
+  errorCaseElement.classList.add('hidden');
 };
 
 // Закрытие сообщения об успешной/ошибочной отправке при клике на body
@@ -155,23 +156,23 @@ const onEscPress = (evt) => {
 
 // Отправка формы
 const onFormSubmit = (cb) => {
-  form.addEventListener('submit', async (evt) => {
+  formElement.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
       blockUploadButton();
-      successButton.addEventListener('click', onCloseButtonClick);
-      errorButton.addEventListener('click', onCloseButtonClick);
+      successButtonElement.addEventListener('click', onCloseButtonClick);
+      errorButtonElement.addEventListener('click', onCloseButtonClick);
       document.addEventListener('keydown', onEscPress);
       document.addEventListener('click', onBodyClick);
-      await cb(new FormData(form));
+      await cb(new FormData(formElement));
       unblockUploadButton();
     }
   });
 };
 
 
-fileField.addEventListener('change', onFileUploadChange);
-cancelButton.addEventListener('click', onCancelButtonClick);
+uploadInputElement.addEventListener('change', onFileUploadChange);
+cancelButtonElement.addEventListener('click', onCancelButtonClick);
 
 export {onFormSubmit, closeModal, showFullSuccessMessage, showFullErrorMessage};

@@ -1,29 +1,3 @@
-export const SIMILAR_PUBLICATIONS_COUNT = 25;
-export const SIMILAR_COMMENTS_COUNT = 5;
-
-export const COMMENT_DESCRIPTIONS = [
-  'Посмотрите где я сегодня побывал!',
-  'Мой кот',
-  'Красивый закат',
-];
-
-export const COMMENT_MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-];
-
-export const COMMENT_NAMES = [
-  'Виктор',
-  'Григорий',
-  'Илья',
-  'Женя',
-  'Алена',
-];
-
 // Количество комментариев в big-picture
 export const COMMENTS_COUNT = 5;
 
@@ -92,7 +66,6 @@ export const EFFECTS = [
 
 export const DEFAULT_EFFECT = EFFECTS[0];
 
-
 // Отправление и получение данных с сервера
 export const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
@@ -114,3 +87,7 @@ export const NUMBER_OF_PHOTOS = 10;
 
 // Задержка сообщения об ошибке в util.js
 export const ERROR_MESSAGE_DELAY = 5000;
+
+// Задержка отображения фотографий
+export const RENDER_PHOTOS_DELAY = 500;
+
