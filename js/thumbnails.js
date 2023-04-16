@@ -1,11 +1,11 @@
 // Контейнер для фотографий случайного пользователя
-const picturesContainer = document.querySelector('.pictures');
+const picturesContainerElement = document.querySelector('.pictures');
 
 // Шаблон изображения случайного пользователя + его содержимое
-const thumbnailPictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const thumbnailTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
 const createThumbnailPicture = ({ url, description, comments, likes, id }) => {
-  const thumbnailPicture = thumbnailPictureTemplate.cloneNode(true);
+  const thumbnailPicture = thumbnailTemplateElement.cloneNode(true);
 
   thumbnailPicture.querySelector('.picture__img').src = url;
   thumbnailPicture.querySelector('.picture__img').alt = description;
@@ -17,13 +17,13 @@ const createThumbnailPicture = ({ url, description, comments, likes, id }) => {
 };
 
 const renderThumbnailPictures = (pictures) => {
-  picturesContainer.querySelectorAll('.picture').forEach((element) => element.remove());
+  picturesContainerElement.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnailPicture = createThumbnailPicture(picture);
     fragment.append(thumbnailPicture);
   });
-  picturesContainer.append(fragment);
+  picturesContainerElement.append(fragment);
 };
 
-export {renderThumbnailPictures, picturesContainer};
+export {renderThumbnailPictures, picturesContainerElement};

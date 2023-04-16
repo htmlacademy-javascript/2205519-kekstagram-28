@@ -1,9 +1,9 @@
 import {NUMBER_OF_PHOTOS} from './const.js';
 
-const imgFilters = document.querySelector('.img-filters');
-const defaultFilterButton = imgFilters.querySelector('#filter-default');
-const discussedFilterButton = imgFilters.querySelector('#filter-discussed');
-const randomFilterButton = imgFilters.querySelector('#filter-random');
+const imgFiltersElement = document.querySelector('.img-filters');
+const defaultFilterButtonElement = imgFiltersElement.querySelector('#filter-default');
+const discussedFilterButtonElement = imgFiltersElement.querySelector('#filter-discussed');
+const randomFilterButtonElement = imgFiltersElement.querySelector('#filter-random');
 
 
 const setActiveFilter = (button) => {
@@ -20,12 +20,12 @@ const compareThumbnails = (photoA, photoB) => {
 };
 
 export const initFilterListeners = (photos, showThumbnails) => {
-  defaultFilterButton.addEventListener('click', (evt) => {
+  defaultFilterButtonElement.addEventListener('click', (evt) => {
     showThumbnails(photos);
     setActiveFilter(evt.target);
   });
 
-  randomFilterButton.addEventListener('click', (evt) => {
+  randomFilterButtonElement.addEventListener('click', (evt) => {
     showThumbnails(photos
       .slice()
       .sort(shuffleThumbnails)
@@ -33,7 +33,7 @@ export const initFilterListeners = (photos, showThumbnails) => {
     setActiveFilter(evt.target);
   });
 
-  discussedFilterButton.addEventListener('click', (evt) => {
+  discussedFilterButtonElement.addEventListener('click', (evt) => {
     showThumbnails(photos
       .slice()
       .sort(compareThumbnails));
