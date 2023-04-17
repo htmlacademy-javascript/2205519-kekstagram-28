@@ -68,6 +68,7 @@ const closeBigPicture = () => {
   closeButtonElement.removeEventListener('click', closeBigPicture);
   document.removeEventListener('keydown', onEscapeButton);
   commentsLoaderElement.removeEventListener('click', loadComments);
+  commentsShow = 0;
   allComments = [];
 };
 
